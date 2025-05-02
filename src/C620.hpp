@@ -76,10 +76,13 @@ public:
     }
 
     /// @brief write output power to C620
-    void write()
+    bool write()
     {
-        can.write(CANMessage(0x200, output_[0], 8));
-        can.write(CANMessage(0x1FF, output_[1], 8));
+        bool is_success[2];
+        is_success[0] = can.write(CANMessage(0x200, output_[0], 8));
+        is_success[1] = can.write(CANMessage(0x1FF, output_[1], 8));
+        
+        return is_success[0] && is_success[1];
     }
 
     int16_t get_current(const int id) const

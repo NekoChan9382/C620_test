@@ -6,8 +6,8 @@
 
 int main()
 {
-    dji::C620 c620(PA_11, PA_12);
-    int output_power = 3000;
+    dji::C620 c620(PB_12, PB_13);
+    int output_power = 5000;
 
     BufferedSerial serial(USBTX, USBRX, 115200); //シリアル初期化
     DigitalIn button(BUTTON1,PullUp);
@@ -36,9 +36,10 @@ int main()
         
         if (time - pre > 10ms)
         {
+            float rmp_to_rad = 2 * M_PI / 60;
             c620.set_output(pid.calc(rpm_goal, rpm, 0.01), 1);
             c620.write();
-            printf("rpm: %d, ampere: %d, output: %d\n", rpm, ampere, c620.get_current(1));
+            printf("rpm: %d, ampere: %d, output: %d, dps: %f\n", rpm, ampere, c620.get_current(1), rpm * rmp_to_rad);
             pre = time;
         }
     }
