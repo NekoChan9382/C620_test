@@ -23,7 +23,6 @@ int main()
     PidGain gain_pos = {0.8, 0.0001, 0.1};
     Pid pid({gain, -7500, 7500});
 
-
     while(1)
     {
         auto time = HighResClock::now();
